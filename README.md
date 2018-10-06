@@ -9,6 +9,8 @@ This project is divided into 3 main components
 `logic.js` this houses the main business logic. It is the ChainCode/Library which intracts with the blockchain. Issueing identities is not part of the business logic which is why we are handling it via our Node server.
 `permission.acl` this is the Access Control List which defines the restrictions each participant has over it when access any resource in the network.
 
+`React-Native` contains the client side code for android app.
+`REST Server` contains the REST server-side code which bridges the client and HyperLedger blockchain.
 
 This business network defines:
 
