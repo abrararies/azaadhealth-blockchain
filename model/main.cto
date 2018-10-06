@@ -1,0 +1,139 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Sample business network definition.
+ */
+namespace org.azaadhealth.blockchain
+
+asset MedicalRecord identified by mrId {
+  o String mrId
+  --> User owner
+  o String url
+  o Visits[]            visits optional
+  o Allergies[]         allergies optional
+  o Treatments[]        treatments optional
+  o Medicines[]         medicines optional
+}
+
+asset InsuranceClaim identified by claimId {
+	o String claimId
+    o String status
+    o DateTime dateCreated optional
+    o DateTime dateUpdated optional
+    --> User claimOwner
+    --> Organisation[] organisations optional
+    --> MedicalRecord[] medicalRecords optional
+}
+
+participant User identified by userId {
+  o String userId
+  o String firstName optional
+  o String lastName optional
+  --> Organisation[]   organisations optional
+  o ContactDetails 	   contactDetails optional
+  o DateTime           dayOfBirth optional
+  o Gender             gender optional
+  o Medicines[]        medications optional
+  o Visits[]           pastVisits optional
+  --> InsuranceClaim[] claims optional
+  --> MedicalRecord[] medicalRecords optional
+}
+
+participant Organisation identified by orgId {
+  o String orgId
+  o String name
+  o String type
+  o Address location optional 
+  --> InsuranceClaim[] claims optional
+}
+
+
+concept Visits {
+  o DateTime visitDate
+  o String procedure optional
+  o String doctor optional 
+  o Address location optional 
+  o String[] medicinePrescribed optional
+}
+
+concept Allergies {
+  o DateTime startDate optional
+  o DateTime endDate optional
+  o String name
+  o String code optional 
+  o String severity optional
+}
+
+concept Treatments {
+  o DateTime startDate optional
+  o DateTime endDate optional
+  o String name
+  o String code optional
+}
+
+concept Medicines {
+  o DateTime startDate optional
+  o DateTime endDate optional
+  o String name
+  o String code optional
+  o String dosage
+}
+
+concept Address {
+  o String city optional
+  o String country optional
+  o String street optional
+  o Integer zip optional
+  o String box optional
+}
+
+concept ContactDetails {
+  o String email optional
+  o String phone optional
+  o	Address address optional
+}
+
+concept Name {
+  o String firstName
+  o String lastName
+}
+
+enum Gender {
+  o MALE
+  o FEMALE
+  o OTHER
+}
+
+
+transaction CreateNewUser {
+	o String userId
+    o String firstName
+    o String lastName
+}
+
+transaction AssignUserOrganisation {
+	o String orgId
+}
+
+transaction CreateMedicalRecord {
+	o String mrId
+    o String url
+}
+
+transaction SubmitInsuranceClaim {
+	o String claimId
+    o String orgId
+    o String status
+    o String[] medicalRecords
+}
