@@ -69,3 +69,7 @@ To test this Network Definition go to **Test** tab:
 
 6. You can now go ahead and execute the rest of the transactions.
 
+
+**UPDATE**
+**Feel free to test out and evaluate currently deployed permissioned blockchain network on our AWS instances
+http://ec2-34-254-183-181.eu-west-1.compute.amazonaws.com:8080/test**
